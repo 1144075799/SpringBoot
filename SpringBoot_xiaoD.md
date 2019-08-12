@@ -194,5 +194,74 @@ spring.resources.static-locations=classpath:/resources/,classpath:/public/,class
 ```shell
 #讲解SpringBoot 文件上传 MultipartFile File 源自SpringMVC
 	MultipartFile 对象的transferTo方法，用于文件保存(效果和操作比原生用FileOuStream方便和高效)
+#代码已经在项目中
+
 ```
+
+## 文件大小设置
+
+```shell
+#设置上传文件的大小
+在有@Configuration这个注解的类下面 而我们就在@SpringBootApplication下面配置
+	@Bean
+    public MultipartConfigElement multipartConfigElement(){
+        MultipartConfigFactory factory=new MultipartConfigFactory();
+        //单个文件最大
+        factory.setMaxFileSize("10240KB");
+        //设置总上传数据总大小
+        factory.setMaxRequestSize("1024000KB");
+        return factory.createMultipartConfig();
+    }
+```
+
+## 热部署
+
+```shell
+#Dev-tool
+spring-boot-devtools
+```
+
+# 自动注入
+
+```shell
+#配置文件加载
+	
+	方式一
+		1.Controller上面配置
+			@PropertySource({"classpath:application.properties"})
+		2.增加属性
+		@Value("${flie.path}")
+    	private String filePath;
+    
+    方式二:实体类配置文件
+    步骤
+    	1.添加@Component	注解；
+		2.使用@PropertySource({"classpath:application.properties"})
+			注解指定配置文件的位置
+		
+		3.必须通过注入IOC对象Resource进来，才能在类中使用获取的配置文件值
+			@Autowired
+    		private ServerSettings serverSettings;
+		
+```
+
+## MockMvc
+
+```shell
+# MockMvc讲解
+	
+	模拟一个mvc请求 去请求接口
+	1.增加类注解
+		@AutoConfigureMockMvc
+		@RunWith(SpringRunner.class)
+		@SpringBootTest(classes = {Application.class})
+	2.相关API
+		perform:执行一个RequestBuilder请求
+		andExpect:添加ResultMatcher->MockMvcResultMatchers验证规则
+		andReturn:最后返回相应的MvcResult
+```
+
+
+
+
 

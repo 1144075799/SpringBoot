@@ -1,6 +1,8 @@
 package com.springboot.controller;
 
+import com.springboot.pojo.ServerSettings;
 import com.springboot.pojo.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +43,8 @@ public class GetController {
 
         params.put("from",form);
         params.put("size",size);
+
+       System.out.println("热部署");
 
         return params;
    }
@@ -100,6 +104,18 @@ public class GetController {
         params.put("id",id);
         return params;
     }
+
+    @Autowired
+    private ServerSettings serverSettings;
+
+    @GetMapping("/v1/test_properties")
+    public Object testPeropert(){
+
+
+
+        return serverSettings;
+    }
+
 
 
 

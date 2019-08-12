@@ -1,6 +1,8 @@
 package com.springboot.controller;
 
 import com.springboot.pojo.JsonData;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Controller
+@PropertySource({"classpath:application.properties"})
 public class FileController {
 
     @RequestMapping("/api/gopage")
@@ -24,7 +27,8 @@ public class FileController {
     }
 
     /**文件存储的路径**/
-    private static final String filePath="D:\\Java\\image\\";
+    @Value("${flie.path}")
+    private String filePath;
 
     @RequestMapping(value = "/upload")
     @ResponseBody
