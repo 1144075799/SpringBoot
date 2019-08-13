@@ -261,7 +261,88 @@ spring-boot-devtools
 		andReturn:最后返回相应的MvcResult
 ```
 
+## 全局异常处理
 
+```shell
+#异常注解介绍
+	@ControllerAdvice 如果返回json数据，则用RestControllerAdvice，就可以不加@ResponseBody		监听异常
+	//捕获全局异常，处理所有不可知的异常
+	@ExceptionHandler(value=Exception.class)
+	
+
+# 自定义异常和页面跳转
+	resource目录下面新疆一个templates，并新建error.html
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("error.html");			//返回错误页面
+        modelAndView.addObject("msg",e.getMessage());
+        return modelAndView;
+```
+
+## 过滤器
+
+```shell
+#讲解springBoot 里面的Filter组件，回调机制
+	
+	filter简单理解:人---->检票员(filter)---->景点
+	
+	 1.SpringBoot启动默认加载的Filter
+	 	characterEncodingFilter
+	 	hiddenHttpMethodFilter
+	 	httpPutFormContentFilter
+	 	requestContextFilter
+	 
+	 2.Filter优先级
+	 	Ordered.HIGHEST_PRECEDENCCE
+	 	Ordered.LOWEST_PRECEDENCCE
+	 	
+	 	低位值意味着更高的优先级Higher values are interpreted as lower priority 
+	 	自定义Filter，避免和默认的Filter优先级一样，不然会冲突
+	 	同模块里面有相关默认Fliter
+	 		web->servlet->filter
+	 
+	 3.自定义0Filter
+	 	1.使用Servlet3.0的注解进行配置
+	 	2.启动类里面添加@ServletComponentScan进行扫描
+	 	3.新建一个Filter类，implement Filter，并实现对应的接口
+	 	4.@WebFilter标记一个类是filter，被spring进行扫描
+	 		urlPatterns:拦截规则，支持正则
+	 		
+	 	5.控制chain。doFilter的方法的调用，来实现是否通过放行，
+		放行:filterChain.doFilter(servletRequest,servletResponse );
+	 	不放行，web应用res.sendRedirect("/index.html");	页面跳转
+	 	6.场景：权限控制，用户登录(非前端后端分离场景)
+	 	
+	 
+#用Servlet3.0的注解自定义原生Servlet实战
+	使用Servlet3.0的注解自定义原生Servlet和Listener
+```
+
+
+
+## Mybatis
+
+```shell
+#持久化数据方式介绍
+	不提供对象和关系模型的直接映射，半ORM
+#注解实战
+	
+	
+	$ 有风险，有漏洞 所以采用 # 避免SQL注入
+	
+	Preparing预编译
+	
+	Parameters插入的值
+	
+#事务介绍和常见的隔离级别
+	介绍什么事务
+		单机事务，分布式事务处理
+	
+	讲解场景的隔离级别
+		
+		
+	@Transactional(propagation = Propagation.REQUIRED)
+	#//Propagation隔离级别
+```
 
 
 
