@@ -344,5 +344,25 @@ spring-boot-devtools
 	#//Propagation隔离级别
 ```
 
+## Redis
+
+```shell
+#redis
+	请求-> Tomcat->mysql
+				->redis(缓存服务)	第二次的时候，就请求缓存
+
+#nosql
+	redis MC mongodb hive....
+	
+#高并发 大用户量 都是采用缓存，通过缓存可以减少mysql的IO
+
+#在线学习网址	http://try.redis.io/
+
+#启动服务 redis-server.exe redis.windows.conf
+
+#启动客户端
+	redis-cli.exe
+```
+
 
 
