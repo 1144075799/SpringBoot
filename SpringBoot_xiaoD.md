@@ -364,5 +364,112 @@ spring-boot-devtools
 	redis-cli.exe
 ```
 
+## 定时任务
 
+```shell
+#简介
+	1.常见定时任务 Java自带的java.util.Timer类
+		Timer:配置麻烦，时间延后 
+		Timertask：不推荐
+	2.Quertz框架
+		配置更简单
+		xml或者注解
+		
+	3.SpringBoot使用注解方式(推荐使用)
+		@EnableScheduling           //开启定时任务
+		@Component					//被spring扫描
+		@Scheduled(fixedRate = 2000)	//被定时任务扫描，定期执行方法
+		
+#常用定时任务配置实现
+	简介:常用定时任务表达式配置和在线生成器
+		1.crontab	工具
+		 @Scheduled(cron = "*/2 * * * * *")  每两秒
+		2.fixedRate:定时多久执行一次(上一次开始执行时间点后2缪在次执行)
+		3.fixedDelay:上一次执行结束时间点后xx秒再次执行
+		4.fixedDelayString	字符串形式，可以通过配置文件指定
+```
+
+## 异步任务
+
+```shell
+#什么是异步任务和使用场景
+	适用于处理log，发送邮件，短信.....等
+
+2.启动类里面使用@EnableAsync注解开启功能，自动扫描
+
+3.定义异步任务类并使用@Component标记组件被容器扫描，异步方法加上@Async
+	注意点
+		1.增加Future<String> 返回结果 AsyncResult<String>("task执行完成")
+		2.如果需要拿到结果，需要判断全部的tash.isDone()
+4.通过注入方式，注入到controller里面。如果测试前后区别则改为同步则Async注解掉
+```
+
+## 日志框架
+
+```shell
+#LogBack
+	
+```
+
+## ES
+
+```shell
+#简介
+	简介:介绍ES的主要特点和使用场景，新特性讲解
+	
+	mysql：like 模糊 性能问题
+	
+	solr:争对企业，Lucene
+	
+	elasticsearch:争对数据量特别大，PB,TB
+		纯Java开发，springBoot使用，5.6.8版本
+	
+#特点
+	全文检索，结构化检索，数据统计，分析，接近试试处理，分布式搜素(可部署数百台服务器)，处理PB级别的数据搜索纠错，自动完成
+	
+#使用场景
+	日志搜素，数据聚合，数据监控，报表统计分析
+	
+#新特性
+	1.6.2.X版本基于Lucene 7.X 更快，性能进一步提升，对应的序列化组件，审计到Jackson2.8
+	2.推荐使用5.0版本推出Java REST/
+	HTTP客户端，依赖少，比Transport使用更方便，在基准测试中，性能并不术语Tramsport客户端
+	
+	3.(重要)不在支持一个索引库里面铎哥type，6.X版本已经禁止一个index里面多个type，所以一个index索引库只能存在1个type
+	
+
+#讲解3
+	mysql:  database	table	record
+	es	 :	index		type(1)	document
+	
+#下载 解压
+	到bin目录下面，直接点击es.bat打开
+	#输入http://127.0.0.1:9200/_cat/health   查看状态
+	配置外网访问的 到config/es.yml 设置network.host:0.0.0.0 设置为外网可以访问
+	
+#基础
+	查看集群健康状态:localhost:9200/_cat/health?v
+	查看节点字数:localhost:9200/_cat/nodes?v
+	查看索引    :localhost:9200/_cat/indices?v
+	创建索引	:localhost:9200/customer?pretty
+	添加数据	:localhost:9200/customer/external/1?pretty	put
+	{
+        "name":"John Doe"
+    }
+    查看数据	:localhost:9200/customer/external/1?pretty   get
+    查看表结构	:localhost:9200/blog
+#SpringBoot整合ES
+	简介:SpringBoot 2.X整合es 5.6.8
+	
+	#1.添加依赖
+	
+	#2.接口集成ESRepository，里面有很多默认实现
+		#索引名称记得小写，类属性名称也是小写
+	新建实体对象article
+	加上类注解 @Document(indexName = "blog",type = "article")
+	
+	#配置文件
+		
+    
+```
 

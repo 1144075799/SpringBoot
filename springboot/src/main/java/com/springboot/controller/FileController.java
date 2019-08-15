@@ -52,11 +52,11 @@ public class FileController {
 
         try {
             file.transferTo(dest);
-            return new JsonData("200",fileName);
+            return new JsonData(200,fileName,"上次成功");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return new JsonData("400",fileName);
+        return new JsonData(400,fileName,"上次失败");
     }
 }
